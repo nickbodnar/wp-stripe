@@ -1,12 +1,9 @@
 <?php
-
 /*
 Plugin Name: WP Stripe
-Plugin URI: http://wordpress.org/extend/plugins/wp-stripe/
-Description: Integration of the payment system Stripe as an alternative to PayPal.
-Author: Human Made Limited
-Version: 1.5
-Author URI: http://hmn.md
+Description: Integration Stripe for recurring payments, modified from http://wordpress.org/extend/plugins/wp-stripe/
+Author: nickbodnar, derived from plugin by Human Made Limited
+Version: 1.6
 */
 
 // Defines
@@ -20,7 +17,7 @@ define( 'WP_STRIPE_VERSION', '1.5' );
 // -----------------------------------------------------
 
 if ( ! class_exists( 'Stripe' ) ) {
-	require_once( WP_STRIPE_PATH . 'stripe-php/lib/Stripe.php' );
+	require_once( WP_STRIPE_PATH . 'stripe-php/init.php' );
 }
 
 // Load WordPress Files
@@ -43,13 +40,11 @@ require_once( WP_STRIPE_PATH . 'includes/stripe-rewrite.php' );
 $options = get_option( 'wp_stripe_options' );
 
 if ( ! empty( $options['stripe_api_switch'] ) ) {
-
 	if ( $options['stripe_api_switch'] === 'Yes') {
-		Stripe::setApiKey( $options['stripe_test_api'] );
+		\Stripe\Stripe::setApiKey( $options['stripe_test_api'] );
 		define( 'WP_STRIPE_KEY', $options['stripe_test_api_publish'] );
-
 	} else {
-		Stripe::setApiKey( $options['stripe_prod_api'] );
+		\Stripe\Stripe::setApiKey( $options['stripe_prod_api'] );
 		define( 'WP_STRIPE_KEY', $options['stripe_prod_api_publish'] );
 	}
 }
@@ -69,10 +64,9 @@ if ( get_option( 'wp_stripe_options' ) === '' ) {
 }
 
 function wp_stripe_defaults() {
-
 	flush_rewrite_rules();
 
-	update_option( 'wp_stripe_options', array(
+	update_option( 'wp_stripe_options', [
 		'stripe_header'           => 'Donate',
 		'stripe_css_switch'       => 'Yes',
 		'stripe_api_switch'       => 'Yes',
@@ -82,8 +76,7 @@ function wp_stripe_defaults() {
 		'stripe_labels_on'        => 'No',
 		'stripe_placeholders_on'  => 'Yes',
 		'stripe_email_required'   => 'No'
-	) );
-
+	] );
 }
 
 // Actions (Overview)
@@ -95,14 +88,12 @@ add_action( 'admin_menu', 'wp_stripe_add_page' );
 // -----------------------------------------------------
 
 function load_wp_stripe_js() {
-
-	wp_enqueue_script( 'stripe-js', 'https://js.stripe.com/v1/', array( 'jquery' ), WP_STRIPE_VERSION );
-	wp_enqueue_script( 'wp-stripe-js', WP_STRIPE_URL . 'js/wp-stripe.js', array( 'jquery' ), WP_STRIPE_VERSION );
+	wp_enqueue_script( 'stripe-js', 'https://js.stripe.com/v1/', [ 'jquery' ], WP_STRIPE_VERSION );
+	wp_enqueue_script( 'wp-stripe-js', WP_STRIPE_URL . 'js/wp-stripe.js', [ 'jquery' ], WP_STRIPE_VERSION );
 
 	// Pass some variables to JS
 	wp_localize_script( 'wp-stripe-js', 'wpstripekey', WP_STRIPE_KEY );
 	wp_localize_script( 'wp-stripe-js', 'ajaxurl', admin_url( 'admin-ajax.php' ) );
-
 }
 add_action( 'wp_print_scripts', 'load_wp_stripe_js' );
 
@@ -113,19 +104,18 @@ function load_wp_stripe_admin_js() {
 add_action( 'admin_print_scripts', 'load_wp_stripe_admin_js' );
 
 function load_wp_stripe_css() {
-
 	$options = get_option( 'wp_stripe_options' );
 
 	if ( isset( $options['stripe_css_switch'] ) && $options['stripe_css_switch'] === 'Yes' ) {
-		wp_enqueue_style('stripe-payment-css', WP_STRIPE_URL . 'css/wp-stripe-display.css', array(), WP_STRIPE_VERSION );
+		wp_enqueue_style('stripe-payment-css', WP_STRIPE_URL . 'css/wp-stripe-display.css', [], WP_STRIPE_VERSION );
 	}
 
-	wp_enqueue_style( 'stripe-widget-css', WP_STRIPE_URL . 'css/wp-stripe-widget.css', array(), WP_STRIPE_VERSION );
+	wp_enqueue_style( 'stripe-widget-css', WP_STRIPE_URL . 'css/wp-stripe-widget.css', [], WP_STRIPE_VERSION );
 }
 add_action( 'wp_print_styles', 'load_wp_stripe_css' );
 
 function load_wp_stripe_admin_css() {
-	wp_enqueue_style( 'stripe-css', WP_STRIPE_URL . 'css/wp-stripe-admin.css', array(), WP_STRIPE_VERSION );
+	wp_enqueue_style( 'stripe-css', WP_STRIPE_URL . 'css/wp-stripe-admin.css', [], WP_STRIPE_VERSION );
 }
 add_action( 'admin_print_styles', 'load_wp_stripe_admin_css' );
 
@@ -134,7 +124,7 @@ add_action( 'admin_print_styles', 'load_wp_stripe_admin_css' );
  */
 function wp_stripe_thickbox() {
 	wp_enqueue_script( 'thickbox' );
-	wp_enqueue_style( 'stripe-thickbox', WP_STRIPE_URL . 'css/wp-stripe-thickbox.css', array(), WP_STRIPE_VERSION );
+	wp_enqueue_style( 'stripe-thickbox', WP_STRIPE_URL . 'css/wp-stripe-thickbox.css', [], WP_STRIPE_VERSION );
 }
 add_action( 'wp_print_styles','wp_stripe_thickbox' );
 

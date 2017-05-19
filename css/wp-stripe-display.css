@@ -6,7 +6,7 @@
     display:block;
     padding:10px;
     margin:0px;
-    width: 400px;
+    width: 380px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
@@ -212,7 +212,7 @@ form#wp-stripe-payment-form .stripe-row-right {
 
 .wp-stripe-poweredby a {
         color:#28a0e5;
-        text-decoration: none;        
+        text-decoration: none;
 }
 
 /* Close Window */
@@ -220,8 +220,8 @@ form#wp-stripe-payment-form .stripe-row-right {
 #TB_closeWindowButton {
     display: block;
     background: url('../images/thickbox_close.png') no-repeat 0 0;
-    width: 15px;
-    height: 15px;
+    width: 19px;
+    height: 19px;
 }
 
 #TB_closeWindowButton:hover {
@@ -301,6 +301,7 @@ textarea.wp-stripe-comment {background: url('../images/h-comment.png') no-repeat
 input.wp-stripe-card-amount {background: url('../images/h-amount.png') no-repeat 8px 8px;}
 input.card-number {background: url('../images/h-card.png') no-repeat 8px 10px;}
 input.card-cvc {background: url('../images/h-cvc.png') no-repeat 8px 10px;}
+input.card-zip {background: url('../images/h-cvc.png') no-repeat 8px 10px;}
 
 form#wp-stripe-payment-form select {
         cursor: pointer;
@@ -508,7 +509,6 @@ input[type=file]:focus, input[type=checkbox]:focus, select:focus {
 
 /* :not(:required) hides this rule from IE9 and below */
 .spinner:not(:required) {
-
     display: none;
     position:absolute;
     top:8px;

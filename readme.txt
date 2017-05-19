@@ -1,5 +1,5 @@
 === WP Stripe ===
-Contributors: humanmade, Noel_Tock, willmot
+Contributors: humanmade, Noel_Tock, willmot, nickbodnar
 Donate link: http://www.noeltock.com
 Tags: stripe, paypal, payment, pay, transfer, charge, widget, form, chargly, recurly, gravatar, avatar, recent, donation, donations, charity, transaction, money
 Requires at least: 3.1
@@ -91,7 +91,7 @@ Filter
 = 1.5 =
 
 * Tested for latest version of WordPress (3.9)
-* Tested for latest version of Stripe 
+* Tested for latest version of Stripe
 * Various security fixes/enhancements
 * Enchanced submit button with progress state
 * Fixed Close button

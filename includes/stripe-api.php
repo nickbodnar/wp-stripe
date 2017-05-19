@@ -3,7 +3,6 @@
 // Work in Progress
 
 function wp_stripe_send_api($amount, $created, $post_id) {
-
     //set POST variables
     $url = 'http://domain.com/get-post.php';
 
@@ -22,7 +21,7 @@ function wp_stripe_send_api($amount, $created, $post_id) {
 
 
 
-    $fields = array(
+    $fields = [
         'amount'=>urlencode($amount),
         'date'=>urlencode($created),
         'p'=>urlencode($project),
@@ -30,7 +29,7 @@ function wp_stripe_send_api($amount, $created, $post_id) {
         'pr'=>urlencode($project_raised),
         'country'=>urlencode($country),
         'type'=>urlencode($type)
-    );
+    ];
 
     //url-ify the data for the POST
     $fields_string = '';
@@ -50,7 +49,6 @@ function wp_stripe_send_api($amount, $created, $post_id) {
 
     //close connection
     curl_close($ch);
-
 }
 
 function wp_stripe_base62_encode($val) {

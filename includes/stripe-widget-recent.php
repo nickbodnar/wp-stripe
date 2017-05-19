@@ -1,28 +1,24 @@
 <?php
 
 class wp_stripe_recent_widget extends WP_Widget {
-
 	/**
 	* Widget setup.
 	*/
 	function wp_stripe_recent_widget() {
-
 		/* Widget settings. */
-		$widget_ops = array( 'classname' => 'wp-stripe-recent', 'description' => __( 'Display a list of the latest public donations.', 'wp-stripe' ) );
+		$widget_ops = [ 'classname' => 'wp-stripe-recent', 'description' => __( 'Display a list of the latest public donations.', 'wp-stripe' ) ];
 
 		/* Widget control settings. */
-		$control_ops = array( 'width' => 200, 'height' => 350, 'id_base' => 'wp-stripe-recent' );
+		$control_ops = [ 'width' => 200, 'height' => 350, 'id_base' => 'wp-stripe-recent' ];
 
 		/* Create the widget. */
 		$this->WP_Widget( 'wp-stripe-recent', __( 'WP Stripe - Recent', 'wp-stripe' ), $widget_ops, $control_ops );
-
 	}
 
 	/**
 	* How to display the widget on the screen.
 	*/
 	function widget( $args, $instance ) {
-
 		// - our variables from the widget settings -
 		$headdesc = $footdesc = $title = $limit = '';
 
@@ -67,7 +63,7 @@ class wp_stripe_recent_widget extends WP_Widget {
 			<?php
 
 			// The Query
-			$donations = new WP_Query( array(
+			$donations = new WP_Query( [
 				'post_type' => 'wp-stripe-trx',
 				'post_status' => 'publish',
 				'posts_per_page' => $limit,
@@ -75,7 +71,7 @@ class wp_stripe_recent_widget extends WP_Widget {
 				'orderby' => 'date',
 				'meta_key' => 'wp-stripe-public',
 				'meta_value' => 'YES'
-			 ) );
+			] );
 
 			while ( $donations->have_posts() ) : $donations->the_post(); ?>
 
@@ -105,14 +101,12 @@ class wp_stripe_recent_widget extends WP_Widget {
 		<?php if ( ! empty( $args['after_widget'] ) ) {
 			echo $args['after_widget'];
 		}
-
 	}
 
 	/**
 	* Update the widget settings.
 	*/
 	function update( $new_instance, $old_instance ) {
-
 		$instance = $old_instance;
 
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
@@ -122,7 +116,6 @@ class wp_stripe_recent_widget extends WP_Widget {
 		$instance['stripe-recent-limit']    = sanitize_text_field( $new_instance['stripe-recent-limit'] );
 
 		return $instance;
-
 	}
 
 	/**
@@ -131,9 +124,8 @@ class wp_stripe_recent_widget extends WP_Widget {
 	* when creating your form elements. This handles the confusing stuff.
 	*/
 	function form( $instance ) {
-
 		/* Set up some default widget settings. */
-		$defaults = array( 'stripe-recent-title' => __( 'Recent Donations', 'wp-stripe' ), 'stripe-recent-limit' => '5' );
+		$defaults = [ 'stripe-recent-title' => __( 'Recent Donations', 'wp-stripe' ), 'stripe-recent-limit' => '5' ];
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		$limit = $instance['stripe-recent-limit']; ?>
 
@@ -162,7 +154,6 @@ class wp_stripe_recent_widget extends WP_Widget {
 		<p><label for="<?php echo esc_attr( $this->get_field_id( 'stripe-recent-headdesc' ) ); ?>"><?php _e( 'Text below payments:', 'wp-stripe' ); ?></label><textarea class="widefat" rows="5" cols="20" id="<?php echo esc_attr( $this->get_field_id( 'stripe-recent-footdesc' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'stripe-recent-footdesc' ) ); ?>"><?php echo esc_textarea( $instance['stripe-recent-footdesc'] ); ?></textarea></p>
 
 	<?php }
-
 }
 /**
  * Add function to widgets_init that'll load our widget.
