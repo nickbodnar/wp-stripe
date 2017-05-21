@@ -334,9 +334,8 @@ function wp_stripe_options_page() { ?>
 			<ul style="color:#777">
 				<li><strong>Card Number</strong> 4242424242424242</li>
 				<li><strong>Card Month</strong> 05</li>
-				<li><strong>Card Year</strong> 2015</li>
+				<li><strong>Card Year</strong> 2019</li>
 			</ul>
-			<p style="color:#777"><strong>Note:</strong> CVC is optional when payments are made.</p>
 		</div>
 
 		<div id="wp-stripe-tab-about">

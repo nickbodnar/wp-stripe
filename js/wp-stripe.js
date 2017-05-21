@@ -42,6 +42,29 @@ jQuery(document).ready(function($) {
         }
     }
 
+    function updateSummary() {
+        var t = '';
+        var amount = parseFloat($('.wp-stripe-card-amount').val());
+        var frequency = parseInt($('#wp_stripe_month_frequency').val());
+        if ( amount ) {
+            if ( frequency ) {
+                var now = new Date();
+                var nextMonth = now.getMonth() + frequency;
+                var nextDate = new Date(now.getFullYear(), nextMonth, now.getDate());
+                while( nextDate.getMonth() != (new Date(now.getFullYear(), nextMonth, 1)).getMonth() ) {
+                    nextDate = new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate() - 1);
+                }
+                t = 'You will be charged $' + amount + ' now and this donation will not renew every ' + frequency + ' months. Your next payment will occur on ' + nextDate.toLocaleDateString() + '.';
+            } else {
+                t = 'You will be charged $' + amount + ' now and this donation will not renew.';
+            }
+        }
+        $('#payment-summary').text(t);
+    }
+
+    $('.wp-stripe-card-amount').on('input', updateSummary);
+    $('#wp_stripe_month_frequency').change(updateSummary);
+
     $('#wp-stripe-payment-form').submit(function(event) {
         event.preventDefault();
         $('.wp-stripe-notification').hide();
@@ -50,15 +73,13 @@ jQuery(document).ready(function($) {
         $('.stripe-submit-button .spinner').fadeIn('slow');
         $('.stripe-submit-button span').addClass('spinner-gap');
 
-        var amount = $('.wp-stripe-card-amount').val() * 100; //amount you want to charge in cents
-
         Stripe.createToken({
             name: $('.wp-stripe-name').val(),
             number: $('.card-number').val(),
             cvc: $('.card-cvc').val(),
             exp_month: $('.card-expiry-month').val(),
             exp_year: $('.card-expiry-year').val(),
-            address_zip: $('.card-zip').val(),
+            address_zip: $('.address-zip').val(),
         }, stripeResponseHandler);
 
         return false;

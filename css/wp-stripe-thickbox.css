@@ -53,6 +53,8 @@
 	text-align:left;
 	top:50%;
 	left:50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin: 0 !important;
 	-moz-box-shadow: rgba(0,0,0,1) 0 4px 30px;
 	-webkit-box-shadow: rgba(0,0,0,1) 0 4px 30px;
 	-khtml-box-shadow: rgba(0,0,0,1) 0 4px 30px;
@@ -60,11 +62,12 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    overflow:hidden !important;
+    max-width: 96vw;
 }
 
 #TB_window iframe {
     overflow:hidden !important;
+    max-height: 70vh;
 }
 
 * html #TB_window { /* ie6 hack */

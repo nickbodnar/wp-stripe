@@ -24,9 +24,6 @@ function wp_stripe_form() {
 			<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( 'wp-stripe-nonce' ); ?>" />
 
 			<div class="wp-stripe-details">
-
-				<div class="wp-stripe-notification wp-stripe-failure payment-errors" style="display:none"></div>
-
 				<div class="stripe-row">
 					<?php if ( $labels_on ) : ?>
 						<label for="wp_stripe_name"><?php _e( 'Name', 'wp-stripe' ); ?></label>
@@ -43,6 +40,36 @@ function wp_stripe_form() {
 
 				<div class="stripe-row">
 					<?php if ( $labels_on ) : ?>
+						<label for="address"><?php _e( 'Street Address', 'wp-stripe' ); ?></label>
+					<?php endif; ?>
+					<input type="text" id="address" name="address" autocomplete="off" class="address" <?php if ( $placeholders_on) : ?>placeholder="<?php _e( 'Address', 'wp-stripe' ); ?> *"<?php endif; ?> required />
+				</div>
+
+				<div class="stripe-row">
+					<div class="stripe-row-left">
+						<?php if ( $labels_on ) : ?>
+							<label for="address-city"><?php _e( 'City', 'wp-stripe' ); ?></label>
+						<?php endif; ?>
+						<input type="text" id="address-city" name="address-city" autocomplete="off" class="address-city" <?php if ( $placeholders_on) : ?>placeholder="<?php _e( 'City', 'wp-stripe' ); ?> *"<?php endif; ?> required />
+					</div>
+					<div class="stripe-row-right">
+						<div class="stripe-row-left">
+							<?php if ( $labels_on ) : ?>
+								<label for="address-state"><?php _e( 'State', 'wp-stripe' ); ?></label>
+							<?php endif; ?>
+							<input type="text" id="address-state" name="address-state" autocomplete="off" class="address-state" <?php if ( $placeholders_on) : ?>placeholder="<?php _e( 'State', 'wp-stripe' ); ?> *"<?php endif; ?> required />
+						</div>
+						<div class="stripe-row-right">
+							<?php if ( $labels_on ) : ?>
+								<label for="address-zip"><?php _e( 'Zip Code', 'wp-stripe' ); ?></label>
+							<?php endif; ?>
+							<input type="text" id="address-zip" name="address-zip" autocomplete="off" class="address-zip" <?php if ( $placeholders_on) : ?>placeholder="<?php _e( 'Zip Code', 'wp-stripe' ); ?> *"<?php endif; ?> required />
+						</div>
+					</div>
+				</div>
+
+				<div class="stripe-row">
+					<?php if ( $labels_on ) : ?>
 						<label for="wp_stripe_comment"><?php _e( 'Comment', 'wp-stripe' ); ?></label>
 					<?php endif; ?>
 					<textarea id="wp_stripe_comment" name="wp_stripe_comment" class="wp-stripe-comment" <?php if ( $placeholders_on ) : ?>placeholder="<?php _e( 'Comments, including Matching info', 'wp-stripe' ); ?>"<?php endif; ?>></textarea>
@@ -50,7 +77,6 @@ function wp_stripe_form() {
 			</div>
 
 			<div class="wp-stripe-card">
-
 				<div class="stripe-row">
 					<?php if ( $labels_on ) : ?>
 						<label for="wp_stripe_amount"><?php printf( __( 'Amount (%s)', 'wp-stripe' ), esc_html( $currency ) ); ?></label>
@@ -70,6 +96,8 @@ function wp_stripe_form() {
 						<option value="12">Annually</option>
 					</select>
 				</div>
+
+				<p id="payment-summary"></p>
 
 				<hr />
 
@@ -121,13 +149,6 @@ function wp_stripe_form() {
 						</select>
 					</div>
 				</div>
-
-				<div class="stripe-row">
-					<?php if ( $labels_on ) : ?>
-						<label for="card-zip"><?php _e( 'Card Billing Zip', 'wp-stripe' ); ?></label>
-					<?php endif; ?>
-					<input type="text" id="card-zip" name="card-zip" autocomplete="off" class="card-zip" <?php if ( $placeholders_on) : ?>placeholder="<?php _e( 'Card zip', 'wp-stripe' ); ?> *"<?php endif; ?> required />
-				</div>
 			</div>
 			<?php
 				$options = get_option( 'wp_stripe_options' );
@@ -146,6 +167,8 @@ function wp_stripe_form() {
 			<div style="clear:both"></div>
 
 			<input type="hidden" name="wp_stripe_form" value="1" />
+
+			<div class="wp-stripe-notification wp-stripe-failure payment-errors" style="display:none"></div>
 
 			<button type="submit" class="stripe-submit-button"><span><div class="spinner">&nbsp;</div><?php _e( 'Submit Payment', 'wp-stripe' ); ?></span></button>
 			<div class="stripe-spinner"></div>

@@ -134,7 +134,9 @@ form#wp-stripe-payment-form {
 }
 
 .stripe-row-right,
-.stripe-row-left{width:50%;}
+.stripe-row-left {
+    width:50%;
+}
 
 form#wp-stripe-payment-form h2.stripe-header {
         padding:10px;
@@ -274,6 +276,16 @@ form#wp-stripe-payment-form .wp-stripe-card input.card-cvc {
         width:120px;
 }
 
+form#wp-stripe-payment-form .address-city {
+        width:130px;
+}
+form#wp-stripe-payment-form .address-state {
+        width:45px;
+}
+form#wp-stripe-payment-form .address-zip {
+        width:45px;
+}
+
 form#wp-stripe-payment-form input,
 form#wp-stripe-payment-form select,
 form#wp-stripe-payment-form textarea {
@@ -301,7 +313,11 @@ textarea.wp-stripe-comment {background: url('../images/h-comment.png') no-repeat
 input.wp-stripe-card-amount {background: url('../images/h-amount.png') no-repeat 8px 8px;}
 input.card-number {background: url('../images/h-card.png') no-repeat 8px 10px;}
 input.card-cvc {background: url('../images/h-cvc.png') no-repeat 8px 10px;}
-input.card-zip {background: url('../images/h-cvc.png') no-repeat 8px 10px;}
+
+input.address {background: url('../images/h-email.png') no-repeat 8px 10px;}
+input.address-city {background: url('../images/h-email.png') no-repeat 8px 10px;}
+input.address-state {background: url('../images/h-email.png') no-repeat 8px 10px;}
+input.address-zip {background: url('../images/h-email.png') no-repeat 8px 10px;}
 
 form#wp-stripe-payment-form select {
         cursor: pointer;

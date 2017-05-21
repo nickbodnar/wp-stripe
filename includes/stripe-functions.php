@@ -10,7 +10,7 @@
  */
 function wp_stripe_shortcode( $atts ) {
 	$options = get_option( 'wp_stripe_options' );
-	$url     = add_query_arg( [ 'wp-stripe-iframe' => 'true', 'keepThis' => 'true', 'TB_iframe' => 'true', 'height' => 580, 'width' => 400 ], home_url() );
+	$url     = add_query_arg( [ 'wp-stripe-iframe' => 'true', 'keepThis' => 'true', 'TB_iframe' => 'true', 'height' => 700, 'width' => 400 ], home_url() );
 	$count   = 1;
 
 	if ( isset( $options['stripe_modal_ssl'] ) && $options['stripe_modal_ssl'] === 'Yes' ) {
@@ -114,6 +114,10 @@ function wp_stripe_charge_initiate() {
 	$frequency = sanitize_text_field( $_POST['wp_stripe_month_frequency'] );
 	$name   = sanitize_text_field( $_POST['wp_stripe_name'] );
 	$email  = sanitize_email( $_POST['wp_stripe_email'] );
+	$address  = sanitize_text_field( $_POST['address'] );
+	$city  = sanitize_text_field( $_POST['address-city'] );
+	$state  = sanitize_text_field( $_POST['address-state'] );
+	$zip  = sanitize_text_field( $_POST['address-zip'] );
 
 	// Strip any comments from the amount
 	$amount = str_replace( ',', '', sanitize_text_field( $_POST['wp_stripe_amount'] ) );
@@ -195,6 +199,10 @@ function wp_stripe_charge_complete($id, $name, $public, $email, $amount, $curren
 			'wp-stripe-public' => $public,
 			'wp-stripe-name' => $name,
 			'wp-stripe-email' => $email,
+			'wp-stripe-address' => $address,
+			'wp-stripe-city' => $city,
+			'wp-stripe-state' => $state,
+			'wp-stripe-zip' => $zip,
 			'wp-stripe-live' => $live,
 			'wp-stripe-date' => $created,
 			'wp-stripe-amount' => $amount,
