@@ -192,9 +192,11 @@ margin-top: expression(0 - parseInt(this.offsetHeight / 2) + (TBWindowMargin = d
 }
 
 #TB_iframeContent{
-	clear:both;
-	border:none;
-	margin-bottom:-1px;
-	_margin-bottom:1px;
+    clear:both;
+    border:none;
+    margin-bottom:-1px;
+    _margin-bottom:1px;
     overflow:hidden !important;
+    height: 375px !important;
+    max-height: 70vh;
 }

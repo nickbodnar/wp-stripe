@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title><?php _e( 'Stripe Payment','wp-stripe' ); ?></title>
         <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-display.css'; ?>">
+        <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-thickbox-only.css'; ?>">
 
         <script type="text/javascript">
             //<![CDATA[

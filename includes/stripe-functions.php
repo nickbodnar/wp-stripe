@@ -139,7 +139,7 @@ function wp_stripe_charge_initiate() {
 			$response = wp_stripe_charge( $amount, $card, $stripe_comment );
 
 			$id       = $response->id;
-			$amount   = $response->amount / 100;
+			$amount   = $response->amount;
 			$currency = strtoupper($response->currency);
 			$created  = $response->created;
 			$live     = $response->livemode;
@@ -156,7 +156,7 @@ function wp_stripe_charge_initiate() {
 			$response = wp_stripe_subscribe($amount, $customerResponse->id, ($frequency . 'm'), $card, $stripe_comment);
 
 			$id       = $response->id;
-			$amount   = $response->plan->amount * $response->quantity / 100;
+			$amount   = $response->plan->amount * $response->quantity;
 			$currency = strtoupper($response->plan->currency);
 			$created  = $response->created;
 			$live     = $response->livemode;
@@ -174,19 +174,18 @@ function wp_stripe_charge_initiate() {
 		do_action( 'wp_stripe_post_fail_charge', $email, $e->getMessage() );
 	}
 
-	$emailMessage = 'name: ' . $name . "\r\n" .
-	'email: ' . $email . "\r\n" .
-	'amount: ' . ($amount/100) . "\r\n" .
-	'frequency: ' . $frequency . "\r\n" .
-	'address: ' . $address . "\r\n" .
-	'city: ' . $city . "\r\n" .
-	'state: ' . $state . "\r\n" .
-	'zip: ' . $zip . "\r\n" .
-	'comment: ' . $widget_comment;
-	// mail( 'destination', 'CCS Payment', $result );
-
 	// Return Results to JS
-	if ( !$success ) {
+	if ( $success ) {
+		$emailMessage = 'name: ' . $name . "\r\n" .
+		'email: ' . $email . "\r\n" .
+		'amount: $' . ($amount/100) . "\r\n" .
+		'frequency: ' . $frequency . "\r\n" .
+		'address: ' . $address . "\r\n" .
+		'city: ' . $city . "\r\n" .
+		'state: ' . $state . "\r\n" .
+		'zip: ' . $zip . "\r\n" .
+		'comment: ' . $widget_comment;
+	} else {
 		http_response_code(400);
 	}
 
@@ -214,7 +213,7 @@ function wp_stripe_charge_complete($id, $name, $email, $amount, $currency, $crea
 			'wp-stripe-zip' => $zip,
 			'wp-stripe-live' => $live,
 			'wp-stripe-date' => $created,
-			'wp-stripe-amount' => $amount,
+			'wp-stripe-amount' => $amount/100,
 			'wp-stripe-currency' => $currency,
 			'wp-stripe-fee' => $fee,
 		];
