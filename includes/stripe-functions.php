@@ -110,7 +110,6 @@ function wp_stripe_charge_initiate() {
 	}
 
 	// Define/Extract Variables
-	$public = sanitize_text_field( $_POST['wp_stripe_public'] );
 	$frequency = sanitize_text_field( $_POST['wp_stripe_month_frequency'] );
 	$name   = sanitize_text_field( $_POST['wp_stripe_name'] );
 	$email  = sanitize_email( $_POST['wp_stripe_email'] );
@@ -134,6 +133,7 @@ function wp_stripe_charge_initiate() {
 		$widget_comment = sanitize_text_field( $_POST['wp_stripe_comment'] );
 	}
 
+	$success = true;
 	try {
 		if ( $frequency == 0 ) {
 			$response = wp_stripe_charge( $amount, $card, $stripe_comment );
@@ -149,7 +149,7 @@ function wp_stripe_charge_initiate() {
 				$fee  = $response->fee;
 			}
 
-			$result = wp_stripe_charge_complete($id, $name, $public, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee);
+			$result = wp_stripe_charge_complete($id, $name, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee);
 		} else {
 			$customerResponse = wp_stripe_create_customer($email);
 			// plans: 1m, 3m, 6m, 12m
@@ -166,14 +166,30 @@ function wp_stripe_charge_initiate() {
 				$fee  = $response->fee;
 			}
 
-			$result = wp_stripe_charge_complete($id, $name, $public, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee);
+			$result = wp_stripe_charge_complete($id, $name, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee);
 		}
 	} catch ( Exception $e ) {
-		$result = '<div class="wp-stripe-notification wp-stripe-failure">' . sprintf( __( 'Oops, something went wrong (%s)', 'wp-stripe' ), $e->getMessage() ) . '</div>';
+		$result = sprintf( __( 'Oops, something went wrong (%s)', 'wp-stripe' ), $e->getMessage() );
+		$success = false;
 		do_action( 'wp_stripe_post_fail_charge', $email, $e->getMessage() );
 	}
 
+	$emailMessage = 'name: ' . $name . "\r\n" .
+	'email: ' . $email . "\r\n" .
+	'amount: ' . ($amount/100) . "\r\n" .
+	'frequency: ' . $frequency . "\r\n" .
+	'address: ' . $address . "\r\n" .
+	'city: ' . $city . "\r\n" .
+	'state: ' . $state . "\r\n" .
+	'zip: ' . $zip . "\r\n" .
+	'comment: ' . $widget_comment;
+	// mail( 'destination', 'CCS Payment', $result );
+
 	// Return Results to JS
+	if ( !$success ) {
+		http_response_code(400);
+	}
+
 	header( 'Content-Type: application/json' );
 	echo json_encode( $result );
 	exit;
@@ -181,7 +197,7 @@ function wp_stripe_charge_initiate() {
 add_action('wp_ajax_wp_stripe_charge_initiate', 'wp_stripe_charge_initiate');
 add_action('wp_ajax_nopriv_wp_stripe_charge_initiate', 'wp_stripe_charge_initiate');
 
-function wp_stripe_charge_complete($id, $name, $public, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee) {
+function wp_stripe_charge_complete($id, $name, $email, $amount, $currency, $created, $live, $paid, $widget_comment, $fee) {
 	if ( $paid === true ) {
 		if ( $live ) {
 			$live = 'LIVE';
@@ -189,14 +205,7 @@ function wp_stripe_charge_complete($id, $name, $public, $email, $amount, $curren
 			$live = 'TEST';
 		}
 
-		if ( $public === 'public' ) {
-			$public = 'YES';
-		} else {
-			$public = 'NO';
-		}
-
 		$meta = [
-			'wp-stripe-public' => $public,
 			'wp-stripe-name' => $name,
 			'wp-stripe-email' => $email,
 			'wp-stripe-address' => $address,
@@ -225,5 +234,5 @@ function wp_stripe_charge_complete($id, $name, $public, $email, $amount, $curren
 		// wp_stripe_update_project_transactions( 'add', $project_id , $post_id );
 	}
 
-	return '<div class="wp-stripe-notification wp-stripe-success"> ' . sprintf( __( 'Success, you just transferred %s', 'wp-stripe' ), '<span class="wp-stripe-currency">' . esc_html( $currency ) . '</span> ' . esc_html( $amount ) ) . ' !</div>';
+	return 'success';
 }

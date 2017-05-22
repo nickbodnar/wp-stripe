@@ -16,29 +16,39 @@ jQuery(document).ready(function($) {
     function stripeResponseHandler(status, response) {
         if (response.error) {
             $('.stripe-submit-button').prop('disabled', false).css('opacity','1.0');
-            $('.payment-errors').show().html(response.error.message);
+            $('.wp-stripe-notification').show().removeClass('failure').addClass('failure').html(response.error.message);
             $('.stripe-submit-button .spinner').fadeOut('slow');
             $('.stripe-submit-button span').removeClass('spinner-gap');
         } else {
             var form$ = $('#wp-stripe-payment-form');
             var token = response['id'];
-            form$.append('<input type="hidden" name="stripeToken" value="' + token + '" />');
+            form$.remove('.stripe-token').append('<input type="hidden" name="stripeToken" class="stripe-token" value="' + token + '" />');
 
-            var newStripeForm = form$.serialize();
+            var serializedForm = form$.serialize();
 
             $.ajax({
-                type : 'post',
+                type : 'POST',
                 dataType : 'json',
                 url : ajaxurl,
-                data : newStripeForm,
-                success: function(response) {
+                data : serializedForm,
+            })
+                .done(function ( data ) {
+                    // $('.wp-stripe-notification').show().removeClass('failure').text(data);
+                    if ( data.indexOf('success') >= 0 ) {
+                        $('#wp-stripe-wrap').hide();
+                        $('#final-success').show();
+                    }
+                })
+                .fail(function ( data ) {
+                    $('.wp-stripe-notification').show().removeClass('failure').addClass('failure').text(data.responseText);
+                })
+                .always(function () {
                     $('.wp-stripe-details').prepend(response);
                     $('.stripe-submit-button').prop('disabled', false).css('opacity','1.0');
                     $('.stripe-submit-button .spinner').fadeOut('slow');
                     $('.stripe-submit-button span').removeClass('spinner-gap');
                     resetStripeForm();
-                }
-            });
+                });
         }
     }
 
@@ -67,7 +77,7 @@ jQuery(document).ready(function($) {
 
     $('#wp-stripe-payment-form').submit(function(event) {
         event.preventDefault();
-        $('.wp-stripe-notification').hide();
+        $('.wp-stripe-notification').text('').hide();
 
         $('.stripe-submit-button').prop('disabled', true).css('opacity','0.4');
         $('.stripe-submit-button .spinner').fadeIn('slow');

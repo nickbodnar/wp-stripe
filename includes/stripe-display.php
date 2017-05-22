@@ -168,12 +168,13 @@ function wp_stripe_form() {
 
 			<input type="hidden" name="wp_stripe_form" value="1" />
 
-			<div class="wp-stripe-notification wp-stripe-failure payment-errors" style="display:none"></div>
-
+			<div class="wp-stripe-notification" style="display: none;"></div>
 			<button type="submit" class="stripe-submit-button"><span><div class="spinner">&nbsp;</div><?php _e( 'Submit Payment', 'wp-stripe' ); ?></span></button>
 			<div class="stripe-spinner"></div>
 		</form>
 	</div>
+
+	<div id="final-success">Thank you for being part of the work of CCS! Your gift has been successfully processed. You will receive an email from CCS within one business day confirming receipt of your gift. Please contact <a href="mailto:info@christianityandscholarship.org" target="_blank">info@christianityandscholarship.org</a> with any questions.	</div>
 
 	<?php
 		$output = apply_filters( 'wp_stripe_filter_form', ob_get_contents() );

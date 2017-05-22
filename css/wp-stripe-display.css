@@ -10,6 +10,11 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
+#final-success {
+    display: none;
+    font-size: 20px;
+}
+
 /* Payment Form Link */
 
 #wp-stripe-modal-button {
@@ -241,26 +246,18 @@ form#wp-stripe-payment-form .stripe-row-right {
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
         border-radius: 5px;
-}
-
-.wp-stripe-currency {
-        text-transform: uppercase;
-}
-
-.wp-stripe-success {
         color:#345607;
         background-color:#D1F2A5;
         text-shadow:0 1px 1px rgba(255,255,255,0.2);
 }
 
-.wp-stripe-failure {
+.wp-stripe-notification.failure {
         color:#4E1E0F;
         background-color:#FF9F80;
         text-shadow:0 1px 1px rgba(255,255,255,0.1);
 }
 
 /* Form Styling */
-
 
 form#wp-stripe-payment-form .wp-stripe-details label {
         color:#777;
