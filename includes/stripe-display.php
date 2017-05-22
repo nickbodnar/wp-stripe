@@ -174,7 +174,7 @@ function wp_stripe_form() {
 		</form>
 	</div>
 
-	<div id="final-success">Thank you for being part of the work of CCS! Your gift has been successfully processed. You will receive an email from CCS within one business day confirming receipt of your gift. Please contact <a href="mailto:info@christianityandscholarship.org" target="_blank">info@christianityandscholarship.org</a> with any questions.	</div>
+	<div id="final-success">Thank you for being part of the work of CCS! Your gift has been successfully processed. You will receive an email from CCS within one business day confirming receipt of your gift. Please <a href="mailto:info@christianityandscholarship.org" target="_blank">contact us</a> with any questions.	</div>
 
 	<?php
 		$output = apply_filters( 'wp_stripe_filter_form', ob_get_contents() );

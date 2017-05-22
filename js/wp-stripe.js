@@ -64,7 +64,7 @@ jQuery(document).ready(function($) {
                 while( nextDate.getMonth() != (new Date(now.getFullYear(), nextMonth, 1)).getMonth() ) {
                     nextDate = new Date(nextDate.getFullYear(), nextDate.getMonth(), nextDate.getDate() - 1);
                 }
-                t = 'You will be charged $' + amount + ' now and this donation will not renew every ' + frequency + ' months. Your next payment will occur on ' + nextDate.toLocaleDateString() + '.';
+                t = 'You will be charged $' + amount + ' now and this donation will renew every ' + frequency + ' months. Your next payment will occur on ' + nextDate.toLocaleDateString() + '.';
             } else {
                 t = 'You will be charged $' + amount + ' now and this donation will not renew.';
             }

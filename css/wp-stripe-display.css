@@ -10,11 +10,14 @@
     height: 100%;
     box-sizing: border-box;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #final-success {
     display: none;
     font-size: 20px;
+    padding: 20px;
+    text-align: center;
 }
 
 /* Payment Form Link */
@@ -184,8 +187,9 @@ form#wp-stripe-payment-form .stripe-row {
 
 form#wp-stripe-payment-form .stripe-row-left,
 form#wp-stripe-payment-form .stripe-row-right {
-        float:left;
-        overflow:auto;
+    float:left;
+    overflow:auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .stripe-spinner {
@@ -275,16 +279,6 @@ form#wp-stripe-payment-form .wp-stripe-card input.card-cvc {
         width:120px;
 }
 
-form#wp-stripe-payment-form .address-city {
-        width:130px;
-}
-form#wp-stripe-payment-form .address-state {
-        width:45px;
-}
-form#wp-stripe-payment-form .address-zip {
-        width:45px;
-}
-
 form#wp-stripe-payment-form input,
 form#wp-stripe-payment-form select,
 form#wp-stripe-payment-form textarea {
@@ -341,6 +335,7 @@ form#wp-stripe-payment-form select {
         appearance: none;
         padding: 2px 7px 2px 7px !important;
         height: auto !important;
+        width: auto !important;
         text-shadow: 0 1px 0 white;
         background-image: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#E8E8E8));
         background-image: -moz-linear-gradient(top, #F9F9F9, #E8E8E8);
@@ -361,7 +356,9 @@ form#wp-stripe-payment-form textarea,
 form#wp-stripe-payment-form select,
 form#wp-stripe-payment-form .uneditable-input {
         display: inline-block;
-        height: 18px;
+        height: 34px;
+        width: 100%;
+        box-sizing: border-box;
         padding: 8px 8px 8px 32px;
         font-size: 13px;
         line-height: 18px;

@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title><?php _e( 'Stripe Payment','wp-stripe' ); ?></title>
-        <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-display.css'; ?>">
-        <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-thickbox-only.css'; ?>">
+        <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-display.css?v=' . WP_STRIPE_VERSION; ?>">
+        <link rel="stylesheet" href="<?php echo esc_url( WP_STRIPE_URL ) . 'css/wp-stripe-thickbox-only.css?v=' . WP_STRIPE_VERSION; ?>">
 
         <script type="text/javascript">
             //<![CDATA[

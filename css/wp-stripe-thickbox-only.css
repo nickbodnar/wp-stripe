@@ -3,4 +3,13 @@ body {
     height: 100%;
     overflow: hidden;
     margin: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+div {
+    -webkit-overflow-scrolling: touch;
+}
+
+input {
+    -webkit-overflow-scrolling: touch;
 }
