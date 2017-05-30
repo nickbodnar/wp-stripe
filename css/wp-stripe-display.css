@@ -330,9 +330,6 @@ input[type=checkbox], input[type=radio] {
 form#wp-stripe-payment-form select {
         margin-top:0px !important;
         display:block;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
         padding: 2px 7px 2px 7px !important;
         height: auto !important;
         width: auto !important;

@@ -11,7 +11,7 @@ Version: 1.6
 
 define( 'WP_STRIPE_PATH',  plugin_dir_path( __FILE__ ) );
 define( 'WP_STRIPE_URL', plugin_dir_url(  __FILE__  ) );
-define( 'WP_STRIPE_VERSION', '1.6' );
+define( 'WP_STRIPE_VERSION', '1.61' );
 
 // Load PHP Lib - https://github.com/stripe/stripe-php
 // -----------------------------------------------------

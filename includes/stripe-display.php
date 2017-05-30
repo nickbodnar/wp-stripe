@@ -90,7 +90,7 @@ function wp_stripe_form() {
 					<?php endif; ?>
 					<select id="wp_stripe_month_frequency" name="wp_stripe_month_frequency">
 						<option value="0">One Time</option>
-						<option value="1">Monthly</option>
+						<option value="1" selected="selected">Monthly</option>
 						<option value="3">Quarterly</option>
 						<option value="6">Semiannually</option>
 						<option value="12">Annually</option>
